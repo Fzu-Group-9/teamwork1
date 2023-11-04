@@ -1,0 +1,36 @@
+import pandas as pd
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+# 读取成绩单信息
+df = pd.read_excel('dan.xlsx')
+
+# 设置发件人和SMTP服务器信息
+sender_email = 'your_email@example.com'
+sender_password = 'your_password'
+smtp_server = 'smtp.example.com'
+smtp_port = 587
+
+# 遍历每个学生的成绩信息，并发送邮件
+for index, row in df.iterrows():
+    # 获取学生信息
+    student_name = row['姓名']
+    student_email = row['邮箱']
+    student_grade = row['成绩']
+
+    # 创建邮件内容
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = student_email
+    message['Subject'] = '成绩单'
+
+    # 添加邮件正文
+    body = f'尊敬的{student_name}同学，您的成绩为：{student_grade}'
+    message.attach(MIMEText(body, 'plain'))
+
+    # 发送邮件
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(message)
