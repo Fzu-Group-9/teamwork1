@@ -1,2 +1,1 @@
-# teamwork1
-woshishabi 
+这是一个学生成绩处理软件
