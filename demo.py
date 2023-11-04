@@ -87,14 +87,17 @@ def handle_input():
         server.sendmail('2196055715@qq.com', [address], msg=message.as_string())
     finally:
         server.quit()
-
+    
+    # 删除本地txt文件
+    txt_file_path = ans + '.txt'
+    if os.path.exists(txt_file_path):
+        os.remove(txt_file_path)
 
 # 创建一个GUI窗口
 root = tk.Tk()
 root.title("选择Excel文件")
 # 设置窗口大小
 root.geometry("300x200")
-
 
 # 选择文件按钮
 select_button = tk.Button(root, text="选择Excel文件", command=update_excel_path)
@@ -112,7 +115,7 @@ entry.pack()
 lable3 = tk.Label(root, text="请输入邮箱")
 lable3.pack()
 
-#输入邮箱
+# 输入邮箱
 entry1 = tk.Entry(root)
 entry1.pack()
 
